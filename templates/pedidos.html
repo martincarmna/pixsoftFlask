@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Pedidos - Pixsoft{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pedidos.css') }}">
+    {% endblock %}
+
+{% block content %}
+<main class="user-orders-page">
+    
+    <div class="page-header">
+        <h1>Historial de Pedidos 🛒</h1>
+        <p>Revisa el estado de tus compras y arrendamientos recientes.</p>
+    </div>
+
+    <div class="tabs-container">
+        <button class="tab-button active" onclick="showTab('compra')">Pedidos de Compra (3)</button>
+        <button class="tab-button" onclick="showTab('arrendamiento')">Pedidos de Arrendamiento (1)</button>
+    </div>
+
+    <section id="compra" class="orders-content active">
+        <h2>Últimas Compras</h2>
+        
+        <div class="orders-table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Pedido</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="ID">#0015</td>
+                        <td data-label="Fecha">2025-11-20</td>
+                        <td data-label="Total">$550.00 </td>
+                        <td data-label="Estado"><span class="status completed">Entregado</span></td>
+                        <td data-label="Acciones"><a href="#">Ver Detalles</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="ID">10016</td>
+                        <td data-label="Fecha">2025-12-01</td>
+                        <td data-label="Total">$1,999.00 </td>
+                        <td data-label="Estado"><span class="status pending">En Proceso</span></td>
+                        <td data-label="Acciones"><a href="#">Seguimiento</a></td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="arrendamiento" class="orders-content hidden">
+        <h2>Arrendamientos Activos y Pasados</h2>
+        
+        <div class="orders-table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Pedido</th>
+                        <th>Artículo</th>
+                        <th>Inicio Arriendo</th>
+                        <th>Fin Previsto</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="ID">40008</td>
+                        <td data-label="Artículo">Servidor Cloud S-200</td>
+                        <td data-label="Inicio">2025-10-01</td>
+                        <td data-label="Fin">2026-03-31</td>
+                        <td data-label="Estado"><span class="status active">Activo</span></td>
+                        <td data-label="Acciones"><a href="#">Administrar</a></td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+        
+    </section>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    
+    function showTab(tabId) {
+        
+        document.querySelectorAll('.orders-content').forEach(content => {
+            content.classList.remove('active');
+            content.classList.add('hidden');
+        });
+        
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.remove('active');
+        });
+        
+        const selectedContent = document.getElementById(tabId);
+        selectedContent.classList.add('active');
+        selectedContent.classList.remove('hidden');
+        
+        document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
+    }
+</script>
+{% endblock %}

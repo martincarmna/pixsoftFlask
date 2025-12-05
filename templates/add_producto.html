@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if producto %}Editar{% else %}Agregar{% endif %} Producto - PIXSOFT</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #6495ef, #2a5298, #76c4e6, #203a43);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            color: #fff;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* NAVBAR */
+        .header {
+            background-color: white;
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        .header a {
+            color: black;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        /* FORMULARIO */
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            padding: 30px;
+            color: black;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        form label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .submit-btn:hover {
+            background: #3730a3;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: rgba(0,0,0,0.4);
+            padding: 30px;
+            margin-top: 40px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <a href="{{ url_for('index') }}"><img src="/static/imagenes/logoutt_sinfondo.png" alt="Logo" width="100"></a>
+    </div>
+
+    <nav class="menu">
+        <a href="{{ url_for('admin_productos') }}">Productos</a>
+        <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+    </nav>
+</header>
+
+<div class="form-container">
+    <h1>{% if producto %}Editar{% else %}Agregar{% endif %} Producto</h1>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" id="nombre" required value="{{ producto.nombre if producto else '' }}">
+
+        <label for="precio">Precio</label>
+        <input type="number" name="precio" id="precio" required value="{{ producto.precio if producto else '' }}">
+
+        <label for="img">Nombre de la Imagen</label>
+        <input type="text" name="img" id="img" required value="{{ producto.img if producto else '' }}">
+
+        <button type="submit" class="submit-btn">{% if producto %}Actualizar{% else %}Agregar{% endif %}</button>
+    </form>
+</div>
+
+<footer class="footer">
+    <p>© 2025 PIXSOFT - Todos los derechos reservados</p>
+</footer>
+
+</body>
+</html>
