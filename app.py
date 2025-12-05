@@ -34,7 +34,9 @@ def init_db():
 @app.route("/")
 def index():
     db = get_db()
-    productos = db.execute("SELECT * FROM productos").fetchall()
+    # Consulta modificada para el index, aunque aquí solo traes productos,
+    # es útil traer la categoría también si la plantilla la necesita.
+    productos = db.execute("SELECT p.*, c.nombre AS nombre_categoria FROM productos p JOIN categorias c ON p.categoria_id = c.id").fetchall()
     return render_template("index.html", productos=productos)
 
 @app.route('/ayuda')
@@ -125,41 +127,74 @@ def admin_required(func):
 @admin_required
 def admin_productos():
     db = get_db()
-    productos = db.execute("SELECT * FROM productos").fetchall()
+    
+    # ----------------------------------------------------------------------
+    # MODIFICACIÓN CLAVE: Usamos JOIN para obtener el nombre de la categoría
+    # y lo asignamos al alias 'nombre_categoria'.
+    # ----------------------------------------------------------------------
+    productos = db.execute("""
+        SELECT 
+            p.*, 
+            c.nombre AS nombre_categoria
+        FROM 
+            productos p
+        JOIN 
+            categorias c ON p.categoria_id = c.id
+        ORDER BY 
+            p.id DESC
+    """).fetchall()
+    
     return render_template("admin_productos.html", productos=productos)
 
 @app.route("/admin/productos/add", methods=["GET", "POST"])
 @admin_required
 def add_producto():
+    db = get_db()
+    
+    # También necesitamos las categorías para el formulario de adición
+    categorias = db.execute("SELECT id, nombre FROM categorias ORDER BY nombre").fetchall()
+    
     if request.method == "POST":
         nombre = request.form["nombre"]
         precio = request.form["precio"]
         img = request.form["img"]
-        db = get_db()
+        categoria_id = request.form["categoria_id"] # Nuevo campo
+        
         db.execute(
-            "INSERT INTO productos (nombre, precio, img) VALUES (?, ?, ?)",
-            (nombre, precio, img)
+            "INSERT INTO productos (nombre, precio, img, categoria_id) VALUES (?, ?, ?, ?)",
+            (nombre, precio, img, categoria_id)
         )
         db.commit()
         return redirect(url_for("admin_productos"))
-    return render_template("add_producto.html")
+    
+    # Pasamos las categorías a la plantilla de adición
+    return render_template("add_producto.html", categorias=categorias) 
 
 @app.route("/admin/productos/edit/<int:id>", methods=["GET", "POST"])
 @admin_required
 def edit_producto(id):
     db = get_db()
+    
+    # Obtenemos todas las categorías para el select box
+    categorias = db.execute("SELECT id, nombre FROM categorias ORDER BY nombre").fetchall()
+    
+    # Obtenemos el producto actual
     producto = db.execute("SELECT * FROM productos WHERE id=?", (id,)).fetchone()
+    
     if request.method == "POST":
         nombre = request.form["nombre"]
         precio = request.form["precio"]
         img = request.form["img"]
+        categoria_id = request.form["categoria_id"] # Nuevo campo
+        
         db.execute(
-            "UPDATE productos SET nombre=?, precio=?, img=? WHERE id=?",
-            (nombre, precio, img, id)
+            "UPDATE productos SET nombre=?, precio=?, img=?, categoria_id=? WHERE id=?",
+            (nombre, precio, img, categoria_id, id)
         )
         db.commit()
         return redirect(url_for("admin_productos"))
-    return render_template("edit_producto.html", producto=producto)
+    
+    return render_template("edit_producto.html", producto=producto, categorias=categorias)
 
 @app.route("/admin/productos/delete/<int:id>")
 @admin_required
@@ -175,4 +210,6 @@ def delete_producto(id):
 if __name__ == "__main__":
     with app.app_context():
         init_db()
+
+    # Solo llama a app.run una vez
     app.run(debug=True, port=5000)

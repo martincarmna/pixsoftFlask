@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Productos - PIXSOFT</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #6495ef, #2a5298, #76c4e6, #203a43);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            color: #fff;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* NAVBAR */
+        .header {
+            background-color: white;
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        .header a {
+            color: black;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        /* CONTENEDOR DE TABLA */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            padding: 20px;
+            color: black;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .add-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 15px;
+            background: #4F46E5;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+        table th {
+            background: #4F46E5;
+            color: white;
+        }
+        table img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .actions a {
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: rgba(0,0,0,0.4);
+            padding: 30px;
+            margin-top: 40px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <a href="{{ url_for('index') }}"><img src="/static/imagenes/logoutt_sinfondo.png" alt="Logo" width="100"></a>
+    </div>
+
+    <nav class="menu">
+        <a href="{{ url_for('admin_productos') }}">Productos</a>
+        <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Panel de Administración de Productos</h1>
+    
+    <a href="{{ url_for('add_producto') }}" class="add-btn">Agregar Producto</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>  <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in productos %}
+            <tr>
+                <td>{{ p.id }}</td>
+                <td>{{ p.nombre }}</td>
+                <td>${{ p.precio }}</td>
+                
+                <td>{{ p.nombre_categoria }}</td>
+                
+                <td><img src="{{ url_for('static', filename='imagenes/' + p.img) }}" alt="{{ p.nombre }}"></td>
+                <td class="actions">
+                    <a href="{{ url_for('edit_producto', id=p.id) }}">Editar</a> |
+                    <a href="{{ url_for('delete_producto', id=p.id) }}" onclick="return confirm('¿Eliminar este producto?')">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<footer class="footer">
+    <p>© 2025 PIXSOFT - Todos los derechos reservados</p>
+</footer>
+
+</body>
+</html>

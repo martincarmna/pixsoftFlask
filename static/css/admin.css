@@ -1,0 +1,160 @@
+/* admin.css */
+
+/* --- RESET Y BODY --- */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f4f7;
+    color: #333;
+}
+
+/* --- NAVBAR / HEADER --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4F46E5;
+    text-decoration: none;
+}
+
+.navbar .menu {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar .menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar .menu a:hover {
+    color: #4F46E5;
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+.container {
+    padding: 40px;
+}
+
+/* --- BOTON AGREGAR PRODUCTO --- */
+.add-btn {
+    display: inline-block;
+    background: #4F46E5;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background 0.3s ease;
+}
+
+.add-btn:hover {
+    background: #3730A3;
+}
+
+/* --- TABLA DE PRODUCTOS --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #4F46E5;
+    color: white;
+    font-weight: 600;
+}
+
+tr:hover {
+    background: #f1f8ff;
+}
+
+/* --- ACCIONES --- */
+.actions a {
+    text-decoration: none;
+    color: #4F46E5;
+    font-weight: bold;
+    margin-right: 10px;
+    transition: color 0.2s ease;
+}
+
+.actions a:hover {
+    color: #3730A3;
+}
+
+/* --- IMAGENES EN TABLA --- */
+td img {
+    max-width: 80px;
+    border-radius: 6px;
+}
+
+/* --- FORMULARIOS (ADD/EDIT) --- */
+form {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+form button {
+    background: #4F46E5;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #3730A3;
+}
+
+/* --- FOOTER --- */
+.footer {
+    background: #E5E7EB;
+    padding: 40px;
+    border-top: 8px solid #42C4D6;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.footer p {
+    color: #6B7280;
+    margin: 0;
+}
