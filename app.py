@@ -37,6 +37,13 @@ def index():
     productos = db.execute("SELECT * FROM productos").fetchall()
     return render_template("index.html", productos=productos, user=session.get("user"))
 
+
+@app.route('/ayuda')
+def ayuda():
+    return render_template('ayuda.html')
+
+
+
 @app.route("/loginuser", methods=["GET", "POST"])
 def loginuser():
     error = None
@@ -80,6 +87,7 @@ def register_user():
                 error = "El correo ya está registrado"
 
     return render_template("register.html", error=error)
+
 
 @app.route("/logout")
 def logout():
