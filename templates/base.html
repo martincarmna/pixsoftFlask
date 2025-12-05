@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Pixsoft{% endblock %}</title> 
-    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <style>
-        
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -22,7 +20,7 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
+        /* Header */
         .header {
             background-color: white;
             color: black;
@@ -32,29 +30,11 @@
             padding: 15px 30px;
         }
         .header img { height: 32px; }
-        .menu a {
-            background-color: white;
-            margin: 0 10px;
-            color: black;
-            text-decoration: none;
-        }
-        .search-box input {
-            padding: 6px 10px;
-            border-radius: 8px;
-            border: none;
-        }
-        .header-icons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-        }
-
-        
+        .menu a { margin: 0 10px; color: black; text-decoration: none; }
+        .search-box input { padding: 6px 10px; border-radius: 8px; border: none; }
+        .header-icons { display: flex; align-items: center; gap: 10px; }
+        .avatar { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
+        /* Footer */
         .footer {
             background: rgba(0,0,0,0.4);
             padding: 30px;
@@ -72,10 +52,7 @@
         .footer-col h4 { margin-bottom: 10px; }
         .newsletter-box { display: flex; gap: 10px; }
         .newsletter-box input { padding: 6px; border-radius: 6px; border: none; }
-        .newsletter-box button {
-            padding: 6px 12px; border: none; border-radius: 6px; 
-            background: #B0F5E9; color: #000; cursor: pointer;
-        }
+        .newsletter-box button { padding: 6px 12px; border: none; border-radius: 6px; background: #B0F5E9; color: #000; cursor: pointer; }
         .footer-bottom {
             margin-top: 20px;
             display: flex;
@@ -87,81 +64,76 @@
             margin: 20px auto 0;
         }
         .socials span { margin: 0 5px; }
-
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-    <header class="header">
-        <div class="logo">
+<header class="header">
+    <div class="logo">
+        <a href="{{ url_for('index') }}">
             <img src="{{ url_for('static', filename='imagenes/logoutt_sinfondo.png') }}" alt="logo">
+        </a>
+    </div>
+    <nav class="menu">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('categorias') }}">Categorías</a>
+        <a href="{{ url_for('pedidos') }}">Pedidos</a>
+        <a href="{{ url_for('ayuda') }}">Ayuda</a>
+    </nav>
+    <div class="search-box">
+        <input type="text" placeholder="Buscar...">
+    </div>
+    <div class="header-icons">
+        <span>❤️</span>
+        <a href="{{ url_for('carrito') }}" style="color:black; text-decoration:none;">🛒</a>
+        <a href="{{ url_for('loginuser') }}">
+            <img class="avatar" src="{{ url_for('static', filename='imagenes/usericono.png') }}" alt="perfil">
+        </a>
+    </div>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-logo">
+            <img src="{{ url_for('static', filename='imagenes/logoEmpresa.png') }}" alt="Logo Footer" width="50" height="50">
         </div>
-
-        <nav class="menu">
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('categorias') }}">Categorías</a>
-            <a href="{{ url_for('pedidos') }}">Pedidos</a>
-            <a href="">Productos</a>
-            <a href="{{ url_for('ayuda') }}">Ayuda</a>
-            <a href="">Arriendos</a>
-        </nav>
-
-        <div class="search-box">
-            <input type="text" placeholder="Search...">
+        <div class="footer-col">
+            <h4>Product</h4>
+            <p>Features</p>
+            <p>Pricing</p>
         </div>
-
-        <div class="header-icons">
-            <span>❤️</span>
-            <span>🛒</span>
-            <a href="{{ url_for('loginuser') }}">
-                <img class="avatar" src="{{ url_for('static', filename='imagenes/usericono.png') }}" alt="profile">
-            </a>
+        <div class="footer-col">
+            <h4>Resources</h4>
+            <p>Blog</p>
+            <p>User guides</p>
         </div>
-    </header>
-
-    {% block content %}{% endblock %}
-
-    <footer class="footer">
-        <div class="footer-top">
-            <div class="footer-logo">
-                <img src="{{ url_for('static', filename='imagenes/logoEmpresa.png') }}" alt="Logo Footer" width="50" height="50">
-            </div>
-            <div class="footer-col">
-                <h4>Product</h4>
-                <p>Features</p>
-                <p>Pricing</p>
-            </div>
-            <div class="footer-col">
-                <h4>Resources</h4>
-                <p>Blog</p>
-                <p>User guides</p>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <p>About us</p>
-                <p>Jobs</p>
-            </div>
-            <div class="newsletter">
-                <h4>Subscribe to our newsletter</h4>
-                <div class="newsletter-box">
-                    <input type="email" placeholder="Enter your email">
-                    <button>Subscribe</button>
-                </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <p>About us</p>
+            <p>Jobs</p>
+        </div>
+        <div class="newsletter">
+            <h4>Subscribe to our newsletter</h4>
+            <div class="newsletter-box">
+                <input type="email" placeholder="Enter your email">
+                <button>Subscribe</button>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2024 Brand, Inc.</p>
-            <div class="socials">
-                <span>🌐</span>
-                <span>🐦</span>
-                <span>📘</span>
-                <span>📸</span>
-            </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 Brand, Inc.</p>
+        <div class="socials">
+            <span>🌐</span>
+            <span>🐦</span>
+            <span>📘</span>
+            <span>📸</span>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    {% block extra_js %}{% endblock %}
-
+{% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -82,9 +82,17 @@
             text-decoration: underline;
             cursor: pointer;
         }
+        .footer {
+            background: rgba(0,0,0,0.4);
+            padding: 30px;
+            margin-top: 40px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+
 <header class="header">
     <div class="logo">
         <a href="{{ url_for('admin_productos') }}"><img src="/static/imagenes/logoutt_sinfondo.png" alt="Logo" width="100"></a>
@@ -107,18 +115,64 @@
         <label>Imagen</label>
         <input type="text" name="img">
 
-        <label>Categoría</label>
-        <select name="categoria" required>
-            <option value="">Seleccione</option>
-            {% for cat in categorias %}
-                <option value="{{ cat.id }}">{{ cat.nombre }}</option>
-            {% endfor %}
-        </select>
+        <label for="categoria">Categoría del Producto</label>
+        <input type="text" list="lista-cate" name="categoria_id" id="categoria" required>
+        <datalist id="lista-cate">
+            <option value="CABLES"></option>
+            <option value="COMPONENTES"></option>
+            <option value="COMPUTADORAS"></option>
+            <option value="CONECTIVIDAD"></option>
+            <option value="ELECTRÓNICA"></option>
+            <option value="ENERGÍA"></option>
+            <option value="GAMING"></option>
+            <option value="IMPRESIÓN"></option>
+            <option value="PUNTO DE VENTA"></option>
+            <option value="HOGAR Y LÍNEA BLANCA"></option>
+            <option value="ACCESORIOS"></option>
+            <option value="Adaptadores"></option>
+            <option value="Cables HDMI"></option>
+            <option value="Adaptadores HDMI"></option>
+            <option value="Cables Displayport"></option>
+            <option value="Adaptadores Displayport"></option>
+            <option value="Cables USB"></option>
+            <option value="HUB USB"></option>
+            <option value="Cargadores"></option>
+            <option value="Ensamble"></option>
+            <option value="Dispositivos de entrada"></option>
+            <option value="Monitores"></option>
+            <option value="Gabinetes"></option>
+            <option value="Teclados"></option>
+            <option value="Tarjetas Madre"></option>
+            <option value="Memorias Ram"></option>
+            <option value="Procesadores"></option>
+            <option value="Laptops"></option>
+            <option value="MacBook"></option>
+            <option value="PCs de Escritorio"></option>
+            <option value="Switches"></option>
+            <option value="Routers"></option>
+            <option value="Televisiones"></option>
+            <option value="Proyectores"></option>
+            <option value="Celulares"></option>
+            <option value="Auriculares"></option>
+            <option value="Diademas"></option>
+            <option value="No Breaks y Ups"></option>
+            <option value="Reguladores"></option>
+            <option value="Multifuncionales"></option>
+            <option value="Impresoras"></option>
+            <option value="Escáner"></option>
+            <option value="Punto de venta - All In One"></option>
+            <option value="Aires Acondicionados"></option>
+            <option value="Refrigeradores"></option>
+        </datalist>
 
-        <button type="submit" class="submit-btn">Agregar</button>
+        <button type="submit" class="submit-btn">{% if producto %}Actualizar{% else %}Agregar{% endif %}</button>
     </form>
     <a href="{{ url_for('admin_productos') }}" class="back-link">Volver</a>
 </div>
+
+<footer class="footer">
+    <p>© 2025 PIXSOFT - Todos los derechos reservados</p>
+</footer>
 
 </body>
 </html>

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Pixsoft - Tienda{% endblock %}
+
+{% block content %}
+<main class="products-page">
+    <div class="page-header">
+        <h1>🛍️ Bienvenido a Pixsoft</h1>
+        <p>Selecciona tus productos favoritos y agrégalos al carrito.</p>
+    </div>
+
+    <div class="products-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        {% for producto in productos %}
+        <div class="product-card" style="background: rgba(255,255,255,0.9); color: black; border-radius: 12px; padding: 15px; width: 220px; text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,0.25);">
+            <img src="/static/imagenes/{{ producto.img }}" alt="{{ producto.nombre }}" style="width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px;">
+            <h3>{{ producto.nombre }}</h3>
+            <p><strong>Categoria:</strong> {{ producto.categoria_nombre }}</p>
+            <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+            <button class="add-to-cart-btn" data-id="{{ producto.id }}" data-name="{{ producto.nombre }}" data-price="{{ producto.precio }}">Agregar al Carrito</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{{ url_for('carrito') }}" class="btn btn-primary">Ir al Carrito 🛒</a>
+    </div>
+</main>
+
+<script>
+// =======================
+// AGREGAR PRODUCTO AL CARRITO
+// =======================
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const buttons = document.querySelectorAll(".add-to-cart-btn");
+
+buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const id = parseInt(btn.dataset.id);
+        const name = btn.dataset.name;
+        const price = parseFloat(btn.dataset.price);
+
+        const existingItem = cart.find(item => item.id === id);
+        if(existingItem){
+            existingItem.quantity += 1;
+        } else {
+            cart.push({id, name, price, quantity: 1});
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert(`${name} se agregó al carrito 🛒`);
+    });
+});
+</script>
+
+{% endblock %}
