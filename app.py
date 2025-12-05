@@ -85,7 +85,9 @@ def register_user():
 def logout():
     session.pop("user", None)
     return redirect(url_for("index"))
-
+@app.route("/arriendos")
+def arriendos():
+    return render_template("arriendos.html")
 # -----------------------------------
 # Inicialización
 # -----------------------------------
@@ -93,3 +95,5 @@ if __name__ == "__main__":
     with app.app_context():
         init_db()  # Crea las tablas si no existen
     app.run(debug=True, port=5000)
+
+

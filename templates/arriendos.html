@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arriendos | PIXSOFT</title>
+
+    <!-- CSS GENERAL -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/arriendos.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR (idéntico al index) -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="/static/imagenes/logoutt_sinfondo.png" alt="logo" style="height:40px;">
+        </div>
+
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="#">Categorías</a>
+            <a href="#">Apartado</a>
+            <a href="#">Productos</a>
+            <a href="#">Ayuda</a>
+            <a href="{{ url_for('arriendos') }}" class="active">Arriendos</a>
+
+            {% if user %}
+                <span class="user">Hola, {{ user }}</span>
+                <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+            {% else %}
+                <a href="{{ url_for('loginuser') }}">Iniciar sesión</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero-arriendos">
+        <h1>Arriendo de Equipos</h1>
+        <p>Encuentra el equipo ideal para tu evento, proyecto o negocio.</p>
+    </section>
+
+    <!-- PRODUCTOS ARRIENDO -->
+    <section class="productos-arriendo">
+        <h2>Equipos Disponibles</h2>
+
+        <div class="grid-arriendos">
+
+            <!-- Tarjeta 1 -->
+            <div class="card-arriendo">
+                <img src="{{ url_for('static', filename='camara.jpg') }}" alt="Cámara profesional">
+                <h3>Cámara Profesional</h3>
+                <p>Perfecta para sesiones de fotos y grabaciones.</p>
+                <span class="precio">$450 por día</span>
+                <button>Arrendar</button>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="card-arriendo">
+                <img src="{{ url_for('static', filename='proyector.jpg') }}" alt="Proyector">
+                <h3>Proyector HD</h3>
+                <p>Ideal para presentaciones y eventos.</p>
+                <span class="precio">$320 por día</span>
+                <button>Arrendar</button>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="card-arriendo">
+                <img src="{{ url_for('static', filename='laptop.jpg') }}" alt="Laptop">
+                <h3>Laptop de Trabajo</h3>
+                <p>Perfecta para trabajo temporal o proyectos.</p>
+                <span class="precio">$280 por día</span>
+                <button>Arrendar</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 PIXSOFT — Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
