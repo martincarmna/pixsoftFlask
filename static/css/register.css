@@ -1,0 +1,91 @@
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-45deg, #6495ef, #2a5298, #76c4e6, #203a43);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            color: #fff;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        .register-bg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .register-card {
+            background-color: white;
+            color: black;
+            border-radius: 12px;
+            display: flex;
+            max-width: 800px;
+            width: 90%;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+
+        .register-left, .register-right {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .register-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register-left h2 {
+            margin-bottom: 20px;
+        }
+
+        .register-left form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .register-left form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #B0F5E9;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .register-right img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
