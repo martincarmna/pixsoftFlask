@@ -6,7 +6,7 @@
     <title>Pixsoft Home</title>
     <link rel="stylesheet" href="/static/css/index.css">
     <style>
-        /* Fondo animado con gradiente en movimiento */
+        
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -78,7 +78,7 @@
             background: rgba(255,255,255,0.9);
         }
 
-        /* Header básico */
+      
         .header {
             background-color: white;
             color: black;
@@ -195,7 +195,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+<<<<<<< HEAD
             border-top: 1px solid rgba(255, 255, 255, 0.2);
+=======
+            border-top: 1px solid rgba(255, 255, 255, 0.2); 
+>>>>>>> 529671841af0c3c2f44b58c94b08f17c406a7676
             padding-top: 20px;
         }
         .socials span { margin: 0 5px; }
@@ -210,10 +214,10 @@
 
     <nav class="menu">
         <a href="#">Home</a>
-        <a href="#">Categorías</a>
-        <a href="#">Apartado</a>
+        <a href="{{ url_for('categorias') }}">Categorías</a>
+        <a href="{{ url_for('pedidos') }}">Pedidos</a>
         <a href="./pedidos.html">Productos</a>
-        <a href="#">Ayuda</a>
+        <a href="{{ url_for('ayuda') }}">Ayuda</a>
         <a href="./arriendos.html">Arriendos</a>
     </nav>
 
@@ -307,6 +311,10 @@
 </footer>
 
 <script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 529671841af0c3c2f44b58c94b08f17c406a7676
 const track = document.querySelector('.carousel-track');
 const slides = Array.from(track.children);
 const prevBtn = document.querySelector('.carousel-btn.prev');
@@ -316,6 +324,10 @@ const indicators = document.querySelectorAll('.carousel-indicators span');
 let currentIndex = 0;
 
 function updateCarousel() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 529671841af0c3c2f44b58c94b08f17c406a7676
     const width = slides[0].clientWidth; 
     track.style.transform = `translateX(-${currentIndex * width}px)`;
     indicators.forEach((dot, i) => {
@@ -323,6 +335,10 @@ function updateCarousel() {
     });
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 529671841af0c3c2f44b58c94b08f17c406a7676
 window.addEventListener('resize', updateCarousel);
 window.addEventListener('load', updateCarousel);
 

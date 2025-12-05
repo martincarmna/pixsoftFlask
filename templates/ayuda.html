@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Soporte y Centro de Ayuda{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/soporte.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<main class="support-page-content">
+    
+    <div class="header-section">
+        <h1>Centro de Ayuda 💡</h1>
+        <p>Encuentra respuestas a tus preguntas o contacta con nuestro equipo de soporte.</p>
+        <div class="support-search">
+            <input type="text" placeholder="Busca preguntas, pedidos o temas de ayuda..." class="search-input">
+            <button class="search-button">Buscar</button>
+        </div>
+    </div>
+
+    <section class="contact-cards">
+        <div class="support-card chat">
+            <i class="fas fa-comments icon"></i>
+            <h2>Chat en Vivo ⚡</h2>
+            <p>¿Necesitas ayuda inmediata? Chatea con uno de nuestros agentes.</p>
+            <button class="contact-button">Iniciar Chat</button>
+        </div>
+
+        <div class="support-card tickets">
+            <i class="fas fa-ticket-alt icon"></i>
+            <h2>Tickets de Soporte 🎫</h2>
+            <p>Para consultas detalladas o problemas técnicos no urgentes.</p>
+            <button class="contact-button secondary">Abrir un Ticket</button>
+        </div>
+
+        <div class="support-card faq">
+            <i class="fas fa-question-circle icon"></i>
+            <h2>Preguntas Frecuentes</h2>
+            <p>Explora nuestra base de conocimiento con las dudas más comunes.</p>
+            <button class="contact-button secondary">Ver FAQ</button>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h3>Preguntas Frecuentes Populares</h3>
+        
+        <div class="faq-list">
+            <div class="faq-item">
+                <p class="question">¿Cómo puedo rastrear mi pedido? <i class="fas fa-chevron-down"></i></p>
+                <div class="answer">Puedes rastrear tu pedido ingresando a la sección 'Pedidos' desde el menú principal y haciendo clic en el número de tu orden.</div>
+            </div>
+            <div class="faq-item">
+                <p class="question">¿Cuál es la política de devoluciones? <i class="fas fa-chevron-down"></i></p>
+                <div class="answer">Aceptamos devoluciones dentro de los 30 días posteriores a la compra. Consulta la sección de 'Términos y Condiciones' para más detalles.</div>
+            </div>
+            <div class="faq-item">
+                <p class="question">¿Cómo cambio mi contraseña? <i class="fas fa-chevron-down"></i></p>
+                <div class="answer">Ve al ícono de usuario en el header, selecciona 'Configuración de Cuenta' y busca la opción 'Cambiar Contraseña'.</div>
+            </div>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.question').addEventListener('click', () => {
+            const answer = item.querySelector('.answer');
+            const icon = item.querySelector('.fa-chevron-down');
+            
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            icon.style.transform = answer.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    });
+</script>
+{% endblock %}
