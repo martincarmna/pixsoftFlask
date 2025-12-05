@@ -210,8 +210,8 @@
 
     <nav class="menu">
         <a href="#">Home</a>
-        <a href="#">Categorías</a>
-        <a href="#">Apartado</a>
+        <a href="{{ url_for('categorias') }}">Categorías</a>
+        <a href="{{ url_for('pedidos') }}">Pedidos</a>
         <a href="./pedidos.html">Productos</a>
         <a href="{{ url_for('ayuda') }}">Ayuda</a>
         <a href="./arriendos.html">Arriendos</a>
@@ -392,7 +392,6 @@ indicators.forEach((dot, i) => {
         updateCarousel();
     });
 });
-
 
 setInterval(() => {
     currentIndex = (currentIndex + 1) % slides.length;

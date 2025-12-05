@@ -1,11 +1,11 @@
-/* Estilos generales para el contenedor principal */
+
 .support-page-content {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-/* Encabezado y barra de búsqueda */
+
 .header-section {
     text-align: center;
     padding: 40px 0;
@@ -44,7 +44,7 @@
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    background-color: #B0F5E9; /* Color del index.html */
+    background-color: #B0F5E9; 
     color: #000;
     cursor: pointer;
     font-weight: bold;
@@ -55,7 +55,6 @@
     background-color: #8ce1d5;
 }
 
-/* Tarjetas de contacto */
 .contact-cards {
     display: flex;
     justify-content: space-between;
@@ -87,7 +86,7 @@
 
 .icon {
     font-size: 2.5em;
-    color: #76c4e6; /* Color de acento */
+    color: #76c4e6; 
 }
 
 .contact-button {
@@ -107,7 +106,6 @@
     border: 1px solid #76c4e6;
 }
 
-/* Preguntas Frecuentes (FAQ) */
 .faq-section h3 {
     font-size: 2em;
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
@@ -137,5 +135,5 @@
 .faq-item .answer {
     padding-top: 10px;
     color: #ccc;
-    display: none; /* Oculto por defecto, se muestra con JS */
+    display: none; 
 }

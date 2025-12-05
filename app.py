@@ -6,9 +6,7 @@ app = Flask(__name__)
 app.secret_key = "supersecreto123"
 DATABASE = os.path.join(app.root_path, "database.db")
 
-# -----------------------------------
-# Funciones de base de datos
-# -----------------------------------
+
 def get_db():
     db = getattr(g, "_database", None)
     if db is None:
@@ -28,9 +26,6 @@ def init_db():
         db.executescript(f.read())
     db.commit()
 
-# -----------------------------------
-# Rutas principales
-# -----------------------------------
 @app.route("/")
 def index():
     db = get_db()
@@ -42,7 +37,15 @@ def index():
 def ayuda():
     return render_template('ayuda.html')
 
+@app.route('/categorias')
+def categorias():
+  
+    return render_template('categorias.html')
 
+@app.route('/pedidos')
+def pedidos():
+ 
+    return render_template('pedidos.html')
 
 @app.route("/loginuser", methods=["GET", "POST"])
 def loginuser():
@@ -94,10 +97,8 @@ def logout():
     session.pop("user", None)
     return redirect(url_for("index"))
 
-# -----------------------------------
-# Inicialización
-# -----------------------------------
+
 if __name__ == "__main__":
     with app.app_context():
-        init_db()  # Crea las tablas si no existen
+        init_db()  
     app.run(debug=True, port=5000)
