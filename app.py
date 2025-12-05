@@ -6,13 +6,9 @@ app = Flask(__name__)
 app.secret_key = "supersecreto123"
 DATABASE = os.path.join(app.root_path, "database.db")
 
-<<<<<<< HEAD
 # --------------------------
 # Base de datos
 # --------------------------
-=======
-
->>>>>>> 529671841af0c3c2f44b58c94b08f17c406a7676
 def get_db():
     db = getattr(g, "_database", None)
     if db is None:
@@ -32,23 +28,14 @@ def init_db():
         db.executescript(f.read())
     db.commit()
 
-<<<<<<< HEAD
 # --------------------------
 # Rutas principales
 # --------------------------
-=======
->>>>>>> 529671841af0c3c2f44b58c94b08f17c406a7676
 @app.route("/")
 def index():
     db = get_db()
     productos = db.execute("SELECT * FROM productos").fetchall()
     return render_template("index.html", productos=productos)
-
-<<<<<<< HEAD
-# --------------------------
-# Login
-# --------------------------
-=======
 
 @app.route('/ayuda')
 def ayuda():
@@ -56,15 +43,15 @@ def ayuda():
 
 @app.route('/categorias')
 def categorias():
-  
     return render_template('categorias.html')
 
 @app.route('/pedidos')
 def pedidos():
- 
     return render_template('pedidos.html')
 
->>>>>>> 529671841af0c3c2f44b58c94b08f17c406a7676
+# --------------------------
+# Login
+# --------------------------
 @app.route("/loginuser", methods=["GET", "POST"])
 def loginuser():
     error = None
@@ -116,14 +103,12 @@ def register_user():
                 error = "El correo ya está registrado"
     return render_template("register.html", error=error)
 
-
 @app.route("/logout")
 def logout():
     session.pop("user", None)
     session.pop("user_email", None)
     return redirect(url_for("index"))
 
-<<<<<<< HEAD
 # --------------------------
 # CRUD Productos (solo admin)
 # --------------------------
@@ -190,10 +175,4 @@ def delete_producto(id):
 if __name__ == "__main__":
     with app.app_context():
         init_db()
-=======
-
-if __name__ == "__main__":
-    with app.app_context():
-        init_db()  
->>>>>>> 529671841af0c3c2f44b58c94b08f17c406a7676
     app.run(debug=True, port=5000)
