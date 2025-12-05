@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,9 +22,17 @@
         }
 
         @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* ================================
@@ -74,7 +83,7 @@
             margin: 20px auto;
             overflow: hidden;
             border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
         }
 
         .carousel-track {
@@ -93,7 +102,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,255,255,0.6);
+            background: rgba(255, 255, 255, 0.6);
             border: none;
             font-size: 2rem;
             cursor: pointer;
@@ -101,11 +110,16 @@
             border-radius: 50%;
         }
 
-        .carousel-btn.prev { left: 15px; }
-        .carousel-btn.next { right: 15px; }
+        .carousel-btn.prev {
+            left: 15px;
+        }
+
+        .carousel-btn.next {
+            right: 15px;
+        }
 
         .carousel-btn:hover {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .carousel-indicators {
@@ -120,13 +134,13 @@
         .carousel-indicators span {
             width: 12px;
             height: 12px;
-            background: rgba(255,255,255,0.6);
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
             cursor: pointer;
         }
 
         .carousel-indicators .active {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         /* ================================
@@ -145,7 +159,7 @@
             color: black;
             border-radius: 12px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             padding-bottom: 15px;
         }
 
@@ -156,9 +170,13 @@
             border-radius: 8px 8px 0 0;
         }
 
-        .product-card h3 { margin: 10px 0; }
+        .product-card h3 {
+            margin: 10px 0;
+        }
 
-        .price { font-weight: bold; }
+        .price {
+            font-weight: bold;
+        }
 
         .product-card button {
             margin-top: 10px;
@@ -195,7 +213,7 @@
            FOOTER
         ================================== */
         .footer {
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.4);
             padding: 30px;
             margin-top: 40px;
             border-radius: 12px 12px 0 0;
@@ -208,7 +226,9 @@
             gap: 20px;
         }
 
-        .footer-col h4 { margin-bottom: 10px; }
+        .footer-col h4 {
+            margin-bottom: 10px;
+        }
 
         .newsletter-box {
             display: flex;
@@ -239,9 +259,11 @@
             padding-top: 20px;
         }
 
-        .socials span { margin: 0 5px; }
+        .socials span {
+            margin: 0 5px;
+        }
     </style>
-</head>
+  
 
 <body>
 
@@ -261,10 +283,13 @@
             <a href="{{ url_for('ayuda') }}">Ayuda</a>
             <a href="{{ url_for('arriendos') }}">Arriendos</a>
         </nav>
-
         <div class="search-box">
-            <input type="text" placeholder="Search...">
+            <form action="{{ url_for('buscar') }}" method="get">
+                <input type="text" name="q" placeholder="Search..." value="{{ query | default('') }}">
+                <button type="submit">🔍</button>
+            </form>
         </div>
+
 
         <div class="header-icons">
             <span>❤️</span>
@@ -420,4 +445,5 @@
     </script>
 
 </body>
+
 </html>

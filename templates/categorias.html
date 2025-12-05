@@ -3,189 +3,118 @@
 {% block title %}Explorar Categorías - Pixsoft{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias.css') }}">
-    {% endblock %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/categorias.css') }}">
+<style>
+    .products-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .products-table th, .products-table td {
+        padding: 12px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+    .products-table th {
+        background-color: #4F46E5;
+        color: white;
+    }
+    .products-table img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+    .add-to-cart-btn {
+        padding: 6px 12px;
+        background-color: #10B981;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 <main class="categories-page-content">
-    
-    <div class="page-title-header">
-        <h1>Explora Nuestros Productos por Categoría 🔎</h1>
-        <p>Encuentra lo que necesitas rápidamente navegando por nuestras secciones especializadas.</p>
-    </div>
-
     <div class="content-wrapper">
-        
         <aside class="sidebar-categories">
             <h2>Categorías Principales</h2>
             <ul class="category-list">
-                <li class="category-item active">
-                    <a href="#" data-category="electronica">Cables</a>
-                    <ul class="subcategory-list">
-                        <li><a href="#">Adaptadores</a></li>
-                        <li><a href="#">Cables HDMI</a></li>
-                        <li><a href="#">Adaptadores HDMI</a></li>
-                    </ul>
+                {% for cat in categorias %}
+                <li class="category-item {% if loop.first %}active{% endif %}">
+                    <a href="#" data-category="{{ cat.nombre }}">{{ cat.nombre }}</a>
                 </li>
-                
-                <li class="category-item">
-                    <a href="#" data-category="gaming">HUB USB</a>
-                    <ul class="subcategory-list">
-                        <li><a href="#">Cables coaxial</a></li>
-                        <li><a href="#">Cargadores</a></li>
-                        <li><a href="#">Cables de alimentación</a></li>
-                    </ul>
-                </li>
-                
-                <li class="category-item">
-                    <a href="#" data-category="hogar">Componentes</a>
-                    <ul class="subcategory-list">
-                        <li><a href="#">Ensamble</a></li>
-                        <li><a href="#">Dispositios de entrada</a></li>
-                    </ul>
-                </li>
-                
-                <li class="category-item">
-                    <a href="#" data-category="oficina">Computadoras</a>
-                    <ul class="subcategory-list">
-                        <li><a href="#">Equipos de Computo</a></li>
-                        <li><a href="#">Apple</a></li>
-                    </ul>
-                </li>
-
-                <li class="category-item">
-                    <a href="#" data-category="oficina">Conectividad</a>
-                    <ul class="subcategory-list">
-                        <li><a href="#">Redes</a></li>
-                        <li><a href="#">Adaptadores de red</a></li>
-                    </ul>
-                </li>
-                <li class="category-item">
-                    <a href="#" data-category="oficina">Electrónica</a>
-                    <ul class="subcategory-list">
-                        <li><a href="#">Energía</a></li>
-                        <li><a href="#">PDU</a></li>
-                    </ul>
-                </li>
-                <li class="category-item">
-                    <a href="#" data-category="oficina">PDU</a>
-                    <ul class="subcategory-list">
-                        <li><a href="#">Regletas y multicontactos</a></li>
-                        <li><a href="#">Transformadores</a></li>
-                    </ul>
-                </li>
-                <li class="category-item">
-                    <a href="#" data-category="oficina">Gaming</a>
-                    <ul class="subcategory-list">
-                        <li><a href="#"> Accesorios gaming</a></li>
-                        <li><a href="#">Laptops gaming</a></li>
-                    </ul>
-                </li>
+                {% endfor %}
             </ul>
         </aside>
 
         <section class="main-content-products">
-            <h2>Subcategorías y Productos Destacados (Electrónica)</h2>
-            
-            <div class="products-grid-container">
-                <div class="category-card subcategory-card">
-                    <img src="https://via.placeholder.com/250x150?text=Laptops" alt="Laptops">
-                    <h3>Laptops de Alto Rendimiento</h3>
-                    <p>Ver 120 Productos</p>
-                </div>
-                
-                <div class="category-card subcategory-card">
-                    <img src="https://via.placeholder.com/250x150?text=Smartphones" alt="Smartphones">
-                    <h3>Últimos Smartphones</h3>
-                    <p>Ver 85 Productos</p>
-                </div>
+            <h2>Productos por Categoría</h2>
 
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/iPhone.jpg') }}" alt="Producto">
-                    <h3>Teléfono X Pro</h3>
-                    <p class="price">$1900</p>
-                    <button>+</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/impresoras.png') }}" alt="Producto">
-                    <h3>Impresora 3D</h3>
-                    <p class="price">$330</p>
-                    <button>+</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/controles.png') }}" alt="Producto">
-                    <h3>Mando Élite</h3>
-                    <p class="price">$160</p>
-                    <button>+</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/controles.png') }}" alt="Producto">
-                    <h3>Mando Élite</h3>
-                    <p class="price">$160</p>
-                    <button>+</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/controles.png') }}" alt="Producto">
-                    <h3>Mando Élite</h3>
-                    <p class="price">$160</p>
-                    <button>+</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/controles.png') }}" alt="Producto">
-                    <h3>Mando Élite</h3>
-                    <p class="price">$160</p>
-                    <button>+</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/controles.png') }}" alt="Producto">
-                    <h3>Mando Élite</h3>
-                    <p class="price">$160</p>
-                    <button>+</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/controles.png') }}" alt="Producto">
-                    <h3>Mando Élite</h3>
-                    <p class="price">$160</p>
-                    <button>+</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename='imagenes/controles.png') }}" alt="Producto">
-                    <h3>Mando Élite</h3>
-                    <p class="price">$160</p>
-                    <button>+</button>
-                </div>
-                
+            {% for categoria_nombre, productos in productos_por_categoria.items() %}
+            <div class="category-products" data-category="{{ categoria_nombre }}" {% if not loop.first %}style="display:none"{% endif %}>
+                {% if productos %}
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr>
+                            <td>
+                                <img src="{{ url_for('static', filename='imagenes/' + (producto.img or 'noimage.png')) }}" alt="{{ producto.nombre }}">
+                            </td>
+                            <td>{{ producto.nombre }}</td>
+                            <td>${{ producto.precio }}</td>
+                            <td>
+                                <button class="add-to-cart-btn">+</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p>No hay productos en esta categoría.</p>
+                {% endif %}
             </div>
-            
-            </section>
-        
+            {% endfor %}
+        </section>
     </div>
 </main>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    document.querySelectorAll('.category-item a').forEach(item => {
-        item.addEventListener('click', (e) => {
+    const categoryLinks = document.querySelectorAll('.category-item a');
+    const categorySections = document.querySelectorAll('.category-products');
+
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', e => {
             e.preventDefault();
-            
+            const selectedCategory = link.dataset.category;
+
+            // Activar el estilo activo
             document.querySelectorAll('.category-item').forEach(li => li.classList.remove('active'));
-            item.closest('.category-item').classList.add('active');
-            
-            const categoryName = item.textContent.trim().split(' ')[0];
-            const mainContentTitle = document.querySelector('.main-content-products h2');
-            
-            mainContentTitle.textContent = `Subcategorías y Productos Destacados (${categoryName})`;
-            
-            console.log(`Cargando contenido para: ${categoryName}`);
+            link.closest('.category-item').classList.add('active');
+
+            // Mostrar solo la categoría seleccionada
+            categorySections.forEach(sec => {
+                if(sec.dataset.category === selectedCategory){
+                    sec.style.display = 'block';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+
+            // Cambiar título principal
+            document.querySelector('.main-content-products h2').textContent = `Productos - ${selectedCategory}`;
         });
     });
 </script>

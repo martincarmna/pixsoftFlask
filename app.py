@@ -13,7 +13,6 @@ DATABASE = os.path.join(app.root_path, "database.db")
 # 2. BASE DE DATOS (SQLite)
 # ============================================================
 def get_db():
-    """Conexión a la base de datos almacenada en g"""
     db = getattr(g, "_database", None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
@@ -22,16 +21,13 @@ def get_db():
 
 @app.teardown_appcontext
 def close_connection(exception):
-    """Cierra la conexión al terminar la request"""
     db = getattr(g, "_database", None)
     if db is not None:
         db.close()
 
 def init_db():
-    """Inicializa la DB desde schema.sql"""
     db = get_db()
     try:
-        # IMPORTANTE: abrir con UTF-8 para evitar errores en Windows
         with app.open_resource("schema.sql", mode="r", encoding="utf-8") as f:
             db.executescript(f.read())
         db.commit()
@@ -42,7 +38,6 @@ def init_db():
 # 3. DECORADOR ADMIN
 # ============================================================
 def admin_required(func):
-    """Restringe acceso solo a admin"""
     def wrapper(*args, **kwargs):
         if session.get("user_email") != "admin@pixsoft.com":
             return "No tienes permisos para acceder a esta página", 403
@@ -55,7 +50,6 @@ def admin_required(func):
 # ============================================================
 @app.route("/")
 def index():
-    """Lista de productos públicos"""
     db = get_db()
     productos = db.execute("""
         SELECT p.*, c.nombre AS categoria_nombre
@@ -72,8 +66,22 @@ def ayuda():
 @app.route("/categorias")
 def categorias():
     db = get_db()
-    categorias = db.execute("SELECT * FROM categorias ORDER BY nombre").fetchall()
-    return render_template("categorias.html", categorias=categorias)
+    # Obtener todas las categorías
+    categorias = db.execute("SELECT id, nombre FROM categorias ORDER BY nombre").fetchall()
+    
+    # Crear un diccionario con productos por categoría
+    productos_por_categoria = {}
+    for cat in categorias:
+        productos = db.execute(
+            "SELECT * FROM productos WHERE categoria_id=? ORDER BY id DESC", (cat["id"],)
+        ).fetchall()
+        productos_por_categoria[cat["nombre"]] = productos
+
+    return render_template("categorias.html",
+                           categorias=categorias,
+                           productos_por_categoria=productos_por_categoria)
+
+
 
 @app.route("/pedidos")
 def pedidos():
@@ -158,22 +166,28 @@ def admin_productos():
 def add_producto():
     db = get_db()
     categorias = db.execute("SELECT id, nombre FROM categorias ORDER BY nombre").fetchall()
+    error = None
     if request.method == "POST":
-        nombre = request.form.get("nombre")
-        precio = request.form.get("precio")
-        img = request.form.get("img")
-        categoria_id = request.form.get("categoria")
+        nombre = request.form.get("nombre", "").strip()
+        precio = request.form.get("precio", "").strip()
+        img = request.form.get("img", "").strip()
+        categoria_id = request.form.get("categoria", "").strip()
 
-        if not categoria_id:
-            return "Debes seleccionar una categoría", 400
+        if not nombre or not precio or not categoria_id:
+            error = "Por favor completa todos los campos obligatorios"
+        else:
+            try:
+                precio_float = float(precio)
+                db.execute(
+                    "INSERT INTO productos (nombre, precio, img, categoria_id) VALUES (?, ?, ?, ?)",
+                    (nombre, precio_float, img, categoria_id)
+                )
+                db.commit()
+                return redirect(url_for("admin_productos"))
+            except ValueError:
+                error = "El precio debe ser un número válido"
 
-        db.execute(
-            "INSERT INTO productos (nombre, precio, img, categoria_id) VALUES (?, ?, ?, ?)",
-            (nombre, precio, img, categoria_id)
-        )
-        db.commit()
-        return redirect(url_for("admin_productos"))
-    return render_template("add_producto.html", categorias=categorias)
+    return render_template("add_producto.html", categorias=categorias, error=error)
 
 @app.route("/admin/productos/edit/<int:id>", methods=["GET", "POST"])
 @admin_required
@@ -181,39 +195,29 @@ def edit_producto(id):
     db = get_db()
     categorias = db.execute("SELECT id, nombre FROM categorias ORDER BY nombre").fetchall()
     producto = db.execute("SELECT * FROM productos WHERE id=?", (id,)).fetchone()
-    
-    if not producto:
-        return "Producto no encontrado", 404
-
     error = None
 
     if request.method == "POST":
         nombre = request.form.get("nombre", "").strip()
         precio = request.form.get("precio", "").strip()
         img = request.form.get("img", "").strip()
-        categoria_id = request.form.get("categoria", "").strip()  # <-- coincide con el HTML
+        categoria_id = request.form.get("categoria", "").strip()
 
-        # Validación
         if not nombre or not precio or not categoria_id:
             error = "Por favor completa todos los campos obligatorios"
         else:
             try:
-                precio_float = float(precio.replace(",", "."))
-                categoria_id_int = int(categoria_id)
+                precio_float = float(precio)
                 db.execute(
                     "UPDATE productos SET nombre=?, precio=?, img=?, categoria_id=? WHERE id=?",
-                    (nombre, precio_float, img, categoria_id_int, id)
+                    (nombre, precio_float, img, categoria_id, id)
                 )
                 db.commit()
                 return redirect(url_for("admin_productos"))
             except ValueError:
-                error = "El precio o categoría no son válidos"
-            except sqlite3.Error as e:
-                error = f"Error al actualizar: {e}"
+                error = "El precio debe ser un número válido"
 
     return render_template("edit_producto.html", producto=producto, categorias=categorias, error=error)
-
-
 
 @app.route("/admin/productos/delete/<int:id>")
 @admin_required
@@ -224,29 +228,26 @@ def delete_producto(id):
     return redirect(url_for("admin_productos"))
 
 # ============================================================
-# RUTAS DEL CARRITO
+# 7. RUTAS DEL CARRITO
 # ============================================================
 @app.route("/carrito")
 def carrito():
-    """Renderiza la página del carrito de compras."""
     return render_template("carrito.html")
 
 @app.route("/confirmar_compra", methods=["POST"])
 def confirmar_compra():
-    """Recibe el carrito en JSON y lo guarda como pedido en la DB."""
     import json
     if not session.get("user_email"):
         return {"success": False, "error": "Debes iniciar sesión"}, 401
 
     try:
-        data = request.get_json()  # El carrito enviado desde JS
+        data = request.get_json()
         if not data:
             return {"success": False, "error": "Carrito vacío"}
 
         db = get_db()
         user_email = session["user_email"]
 
-        # Crear tabla de pedidos si no existe
         db.execute("""
             CREATE TABLE IF NOT EXISTS pedidos (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -261,7 +262,6 @@ def confirmar_compra():
         """)
         db.commit()
 
-        # Insertar cada producto del carrito
         for item in data:
             db.execute(
                 "INSERT INTO pedidos (user_email, producto_id, nombre, precio, cantidad, subtotal) VALUES (?, ?, ?, ?, ?, ?)",
@@ -273,11 +273,35 @@ def confirmar_compra():
     except Exception as e:
         print("Error al confirmar compra:", e)
         return {"success": False, "error": str(e)}
+    
+@app.route("/buscar", methods=["GET"])
+def buscar():
+    query = request.args.get("q", "").strip()
+    db = get_db()
+    if query:
+        # Busca productos por nombre o por categoría
+        productos = db.execute("""
+            SELECT p.*, c.nombre AS categoria_nombre
+            FROM productos p
+            LEFT JOIN categorias c ON p.categoria_id = c.id
+            WHERE p.nombre LIKE ? OR c.nombre LIKE ?
+            ORDER BY p.id DESC
+        """, (f"%{query}%", f"%{query}%")).fetchall()
+    else:
+        # Si no hay query, mostrar todos
+        productos = db.execute("""
+            SELECT p.*, c.nombre AS categoria_nombre
+            FROM productos p
+            LEFT JOIN categorias c ON p.categoria_id = c.id
+            ORDER BY p.id DESC
+        """).fetchall()
+
+    return render_template("index.html", productos=productos, query=query)
 
 # ============================================================
-# 7. INICIALIZACIÓN
+# 8. INICIALIZACIÓN
 # ============================================================
 if __name__ == "__main__":
     with app.app_context():
-        init_db()  # Inicializa DB
+        init_db()
     app.run(debug=True, port=5000)
