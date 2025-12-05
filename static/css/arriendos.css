@@ -1,0 +1,144 @@
+/* GENERAL */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f4f7;
+}
+
+/* NAVBAR (adaptado al estilo del index) */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 40px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar .logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.navbar nav a.active {
+    color: #4F46E5;
+}
+
+.navbar .user {
+    font-weight: bold;
+    color: #4F46E5;
+}
+
+/* HERO SECTION */
+.hero-arriendos {
+    background: linear-gradient(to right, #4F46E5, #42C4D6);
+    padding: 70px 40px;
+    text-align: center;
+    color: white;
+}
+
+.hero-arriendos h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.hero-arriendos p {
+    font-size: 18px;
+}
+
+/* PRODUCTOS */
+.productos-arriendo {
+    padding: 40px;
+}
+
+.productos-arriendo h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+}
+
+.grid-arriendos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* TARJETA DE ARRIENDO */
+.card-arriendo {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: transform .2s ease;
+}
+
+.card-arriendo:hover {
+    transform: translateY(-5px);
+}
+
+.card-arriendo img {
+    width: 180px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.card-arriendo h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.card-arriendo p {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.card-arriendo .precio {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    color: #4F46E5;
+    margin-bottom: 15px;
+}
+
+.card-arriendo button {
+    background: #4F46E5;
+    border: none;
+    padding: 10px 16px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.card-arriendo button:hover {
+    background: #3B37C2;
+}
+
+/* FOOTER */
+.footer {
+    background: #E5E7EB;
+    padding: 30px;
+    text-align: center;
+    margin-top: 40px;
+    border-top: 8px solid #42C4D6;
+}
+
+.footer p {
+    margin: 0;
+    color: #6B7280;
+}
